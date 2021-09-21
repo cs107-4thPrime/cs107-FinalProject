@@ -1,6 +1,6 @@
 # cs107-FinalProject
-Group Number: 7_
-Group Name: 4thPrime_
+Group Number: 7 <br />
+Group Name: 4thPrime <br />
 Group Members:
 * Xiwen Jia
 * Robert Shekoyan
