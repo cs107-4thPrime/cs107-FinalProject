@@ -2,7 +2,7 @@
 # list of test cases you want to run
 tests=(
 test_derivatives.py
-test_dual.py
+# test_dual.py
 )
 # decide what driver to use (depending on arguments given)
 unit='-m unittest'
@@ -17,4 +17,6 @@ fi
 # want to test from the source directly (not a package that we have (possibly) installed earlier)
 export PYTHONPATH="$(pwd -P)/../src":${PYTHONPATH}
 # run the tests
-${driver} ${tests[@]}
+#${driver} ${tests[@]}
+pytest --cov=./ --cov-report=xml
+codecov
