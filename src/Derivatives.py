@@ -35,7 +35,7 @@ def exp(a: Dual) -> Dual:
     ders[k] = math.exp(a.value)*v
   return Dual(value, ders)  
 
- def power(a: Dual, p: int or float) -> Dual:
+def power(a: Dual, p: int or float) -> Dual:
    """power (dual number) of base p (integer or float number), using math.power(x, y)"""
    """test for the power(a: Dual, p: int or float) function is not yet implemented in test_derivatives.py"""
    value = math.power(p, a)
