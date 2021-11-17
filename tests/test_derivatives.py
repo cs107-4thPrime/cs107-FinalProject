@@ -1,8 +1,13 @@
 import pytest
 import math
+<<<<<<< HEAD
 from Dual_class import Dual
 from Derivatives import *
 
+=======
+from src.Dual_class import Dual
+from src.Derivatives import *
+>>>>>>> 3b1b67d3d90d4541e8ea2644beb2c71549c9e828
 class TestFunctions:
   def test_naturallog(self):
     x1 = Dual(2,{'x1':1}) 
