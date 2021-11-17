@@ -99,7 +99,7 @@ def atan(a: Dual) -> Dual:
     ders[k] = 1/(1+(a.value)**2)*v
   return Dual(value, ders)
 
- def sinh(a: Dual) -> Dual:
+def sinh(a: Dual) -> Dual:
    """sinh of the dual number a, using math.sinh(x) and math.cosh(x)"""
    """test for the sinh(a: Dual) function is not yet implemented in test_derivatives.py"""
    value = math.sinh(a.value)
@@ -108,7 +108,7 @@ def atan(a: Dual) -> Dual:
      ders[k] = math.cosh(a.value)*v
    return Dual(value, ders)
 
- def cosh(a: Dual) -> Dual:
+def cosh(a: Dual) -> Dual:
    """cosh of the dual number a, using math.cosh(x)"""
    """test for the cosh(a: Dual) function is not yet implemented in test_derivatives.py"""
    value = math.cosh(a.value)
@@ -117,7 +117,7 @@ def atan(a: Dual) -> Dual:
      ders[k] = math.sinh(a.value)*v
    return Dual(value, ders)
 
- def tanh(a: Dual) -> Dual:
+def tanh(a: Dual) -> Dual:
    """tanh of the dual number a, using math.tanh(x)"""
    """test for the tanh(a: Dual) function is not yet implemented in test_derivatives.py"""
    value = math.tanh(a.value)
