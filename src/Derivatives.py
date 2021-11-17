@@ -9,7 +9,7 @@ Original file is located at
 
 import math
 import numpy as np
-from Dual_class import Dual
+from src.Dual_class import Dual
 
 def ln(a: Dual) -> Dual:
   """Natural log of Dual number a, using math.log(x)"""
