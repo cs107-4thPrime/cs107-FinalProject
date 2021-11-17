@@ -1,7 +1,9 @@
 import pytest
 import math
-from Dual_class import Dual
-from Derivatives import *
+
+from src.Dual_class import Dual
+from src.Derivatives import *
+
 class TestFunctions:
   def test_naturallog(self):
     x1 = Dual(2,{'x1':1}) 
@@ -109,6 +111,32 @@ class TestFunctions:
     assert f.value == math.atan(math.pi/3)
     assert f.ders['x1'] == 1/(((math.pi/3)**2) + 1)
 
+  def test_sinh(self):
+
+    x1 = Dual(1, {'x1':1})
+
+    f = sinh(x1)
+
+    assert f.value == math.sinh(1)
+    assert f.ders['x1'] == math.cosh(1)
+
+  def test_cosh(self):
+
+    x1 = Dual(1, {'x1':1})
+
+    f = cosh(x1)
+
+    assert f.value == math.cosh(1)
+    assert f.ders['x1'] == math.sinh(1)
+
+  def test_tanh(self):
+
+    x1 = Dual(2, {'x1':1})
+
+    f = tanh(x1)
+
+    assert f.value == math.tanh(2)
+    assert f.ders['x1'] == (1/math.cosh(2))**2
 
   def test_sqrt(self):
 
@@ -135,18 +163,25 @@ def example_log_domainValueError():
     f = log(x2,5)
 
 def example_tan_domainValueError():
+
   x1 = Dual(math.pi/2,{'x1':1}) 
-  x3 = Dual(math.pi/2+math.pi,{'x3':1})
+  x2 = Dual(math.pi/2+math.pi,{'x2':1})
   
   with pytest.raises(ValueError):
     f = tan(x1)
   with pytest.raises(ValueError):
-    f = tan(x3)
+    f = tan(x2)
   
 
 def example_asin_acos_domainValueError():
   
-  pass
+  x1 = Dual(2,{'x1':1}) 
+  x2 = Dual(2,{'x2':1})
+  
+  with pytest.raises(ValueError):
+    f = asin(x1)
+  with pytest.raises(ValueError):
+    f = acos(x2)
 
 def example_sqrt_domainValueError():
   
