@@ -2,7 +2,7 @@ import math
 import numpy as np
 import sys
 sys.path.insert(1, './src')
-from Dual_class import Dual
+from Dual_class import *
 
 # Trig functions
 

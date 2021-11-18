@@ -1,7 +1,7 @@
 import pytest
 import math
 
-from src.Dual_class import Dual
+from src.Dual_class import *
 from src.Derivatives import *
 
 class TestFunctions:

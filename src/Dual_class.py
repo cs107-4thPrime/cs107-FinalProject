@@ -2,14 +2,20 @@ import math
 from collections import defaultdict
 class Dual(object):
   def __init__(self,value, ders):
-  # value (real number): the current value of the function
-  # ders (dict): {'variable name': 'partial derivative with respect to the variable'} 
+    """
+    - value (real number): the current value of the function
+    - ders (dict): {'variable name': 'partial derivative wrt. the variable'} 
+    """
     self.value = value 
     self.ders = ders
 
   def partial(self,variable_name) -> float:
-    """return the corresponding partial derivative with respect to the given 
-    variable_name (e.g. self.ders[variable_name])"""
+    """
+    Get the partial derivative with respect to the given variable_name
+    input: 
+        - `variable_name`: string
+    return :
+        - output : float or int, the corresponding partial at current stage wrt. variable_name"""
     return self.ders[variable_name]
 
   def gradient(self) -> dict:
@@ -30,13 +36,21 @@ class Dual(object):
     return result
 
   def __repr__(self) -> str: 
-    """return the type which is class, and the class name which is Dual"""
+    """return the type which is class which can construc the Dual with eval()"""
     class_name = type(self).__name__
     return f"{class_name}({self.value},{self.ders})"
 
 
   def __add__(self, other): 
-    """Add two Dual numbers or add a scaler to a Dual number"""
+    """
+    = self + other
+    Description: a Dual(self) plus a constant(other) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - self with updated value and ders
+    """
     if isinstance(other, Dual):
       new_ders = defaultdict(float)
       for k,v in self.ders.items():
@@ -48,11 +62,27 @@ class Dual(object):
       return Dual(self.value+other,self.ders)
 
   def __radd__(self,other):
-    """right add function """
+    """
+    = other + self
+    Description: a constant(other) plus a Dual(self) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - self with updated value and ders
+    """
     return self.__add__(other)
 
   def __mul__(self,other):
-    """Product Rule & Multiplication by constant"""
+    """
+    = self * other
+    Description: a Dual(self) times a constant or another Dual(other) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - new Dual with updated value and ders
+    """
     if isinstance(other, Dual):
       new_ders = dict()
       for k,v in self.ders.items():
@@ -72,40 +102,77 @@ class Dual(object):
         new_ders[k] = v*other
       return Dual(self.value*other,new_ders)
 
-
-
   def __rmul__(self,other): 
-    """Product Rule & Multiplication by constant"""
+    """
+    = other * self
+    Description: a constant(other) times a Dual(self) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - new Dual with updated value and ders
+    """
     return self.__mul__(other)
 
   def __sub__(self,other) :
-    """Subtract other from self and return result"""
+    """
+    = self - sub
+    Description: a Dual(self) minus a constant or another Dual(other) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - self with updated value and ders
+    """
     return self + (-1)*other
 
 
   def __rsub__(self,other):
-    """Difference rule"""
+    """
+    = other - self
+    Description: a constant(other) minus a Dual(self) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - self with updated value and ders
+    """
     return self.__neg__()+other
 
-  def __div__(self,other):
-    """Quotient Rule & Reciprocal Rule: python 2"""
-    return self * (other ** (-1))
-
-  def __rdiv__(self,other):
-    """Quotient Rule & Reciprocal Rule: python 2"""
-    return self.__pow__(-1)*other
-
-
   def __truediv__(self,other):
-    """Quotient Rule & Reciprocal Rule: python 3"""
+    """
+    = self/other
+    Description: a Dual (self) divided by a constant or Dual (other) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - a new Dual class
+    """
     return self * (other ** (-1))
 
   def __rtruediv__(self,other):
-    """Quotient Rule & Reciprocal Rule: python 3"""
+    """
+    = other/self
+    Description: a constant (other) divided by a Dual (self) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - a new Dual class
+    """
     return self.__pow__(-1)*other
 
   def __pow__(self,other):
-    """Power rule"""
+    """
+    self**other
+    Description: Dual class (self) to the power of a constant (other) 
+    input: 
+        - `self`: a dual class
+        - `other`: a constant , float or int
+    result:
+        - a new Dual class
+    """
     if type(other) == float or type(other) ==  int:
       value = self.value**other
       new_ders = defaultdict(float)
@@ -116,13 +183,20 @@ class Dual(object):
         for k,v in self.ders.items():
           new_ders[k] = 0
           
-    else:
+    elif type(other) == Dual:
       raise TypeError('Exponent of a Dual class can not be another Dual class')
     return Dual(value,new_ders)
 
 
   def __neg__(self):
-    """Multiplication by constant"""
+    """
+    = -self
+    Description: negation of Dual(self) 
+    input: 
+        - `self`: a dual class
+    return:
+        - self with value and ders updated
+    """
     self.value = -self.value
     for k,v in self.ders.items():
       self.ders[k] = -v
