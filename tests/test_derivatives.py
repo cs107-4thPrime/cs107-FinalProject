@@ -117,8 +117,8 @@ class TestFunctions:
 
     f = sinh(x1)
 
-    assert f.value == math.sinh(1)
-    assert f.ders['x1'] == math.cosh(1)
+    assert round(f.value,5) == round(math.sinh(1),5)
+    assert round(f.ders['x1'],5) == round(math.cosh(1),5)
 
   def test_cosh(self):
 
@@ -126,8 +126,8 @@ class TestFunctions:
 
     f = cosh(x1)
 
-    assert f.value == math.cosh(1)
-    assert f.ders['x1'] == math.sinh(1)
+    assert round(f.value,5) == round(math.cosh(1),5)
+    assert round(f.ders['x1'],5) == round(math.sinh(1),5)
 
   def test_tanh(self):
 
@@ -135,8 +135,8 @@ class TestFunctions:
 
     f = tanh(x1)
 
-    assert f.value == math.tanh(2)
-    assert f.ders['x1'] == (1/math.cosh(2))**2
+    assert round(f.value,5) == round(math.tanh(2),5)
+    assert round(f.ders['x1'],5) == round((1/math.cosh(2))**2,5)
 
   def test_sqrt(self):
 
@@ -144,7 +144,7 @@ class TestFunctions:
 
     f = sqrt(x1)
     assert f.value == math.sqrt(16)
-    assert f.ders['x1'] == (1/2)*((16)**(-1/2))
+    assert round(f.ders['x1'],5) == round((1/2)*((16)**(-1/2)),5)
   
 
 def example_log_domainValueError():

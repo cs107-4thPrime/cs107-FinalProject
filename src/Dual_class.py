@@ -120,15 +120,22 @@ class Dual(object):
     if type(other) == float or type(other) ==  int:
       value = self.value**other
       new_ders = defaultdict(float)
-      for k,v in self.ders.items():
-        new_ders[k] = (other*(self.value)**(other-1))*v
+      if other != 0:
+        for k,v in self.ders.items():
+          new_ders[k] = (other*(self.value)**(other-1))*v
+      else:
+        for k,v in self.ders.items():
+          new_ders[k] = 1
+      
+      
+      
           
     else:
-      raise Exception('No Dual class')
+      raise Exception('Exponent of a Dual class can not be another Dual class')
     return Dual(value,new_ders)
 
 
-  def __neg__(self,other):
+  def __neg__(self):
     """Multiplication by constant"""
     self.value = -self.value
     for k,v in self.ders.items():
