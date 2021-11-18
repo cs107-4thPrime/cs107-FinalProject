@@ -30,7 +30,7 @@ class Dual(object):
     """return the current value"""
     return self.value
 
-  def str(self) -> str: 
+  def __str__(self) -> str: 
     """return a string that shows the current value, and gradient"""
     result = f'Current Value is : {self.value}\n'
     result += 'Partial Derivative with respect to each variable:'
@@ -40,10 +40,10 @@ class Dual(object):
 
 
 
-  def repr(self) -> str: 
+  def __repr__(self) -> str: 
     """return the type which is class, and the class name which is Dual"""
     class_name = type(self).__name__
-    return f"{class_name}({self.value,self.ders})"
+    return f"{class_name}({self.value},{self.ders})"
 
 
   def __add__(self, other): 

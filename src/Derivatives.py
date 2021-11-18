@@ -9,7 +9,9 @@ Original file is located at
 
 import math
 import numpy as np
-from src.Dual_class import Dual
+import sys
+sys.path.insert(1, './src')
+from Dual_class import Dual
 
 # Trig functions
 

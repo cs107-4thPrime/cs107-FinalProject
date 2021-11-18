@@ -2,7 +2,7 @@
 # list of test cases you want to run
 tests=(
 test_derivatives.py
-# test_dual.py
+test_dual.py
 )
 # decide what driver to use (depending on arguments given)
 unit='-m unittest'
