@@ -123,7 +123,7 @@ class Dual(object):
           new_ders[k] = (other*(self.value)**(other-1))*v
       else:
         for k,v in self.ders.items():
-          new_ders[k] = 1
+          new_ders[k] = 0
           
     else:
       raise Exception('Exponent of a Dual class can not be another Dual class')
