@@ -38,8 +38,6 @@ class Dual(object):
       result += f'variable ({k}): {v}'
     return result
 
-
-
   def __repr__(self) -> str: 
     """return the type which is class, and the class name which is Dual"""
     class_name = type(self).__name__
@@ -126,9 +124,6 @@ class Dual(object):
       else:
         for k,v in self.ders.items():
           new_ders[k] = 1
-      
-      
-      
           
     else:
       raise Exception('Exponent of a Dual class can not be another Dual class')
@@ -143,27 +138,21 @@ class Dual(object):
 
     return self
 
-if __name__ == "__main__":
-  x1 = Dual(2,{'x1':1}) 
-  x2 = Dual(4,{'x2':1})
-  x3 = Dual(5,{'x3':1})
-
-  # Second is to implement a function with the initialized variables. The returned value (f)  is itself a Dual as well. 
-  f = x1 * 3 + (x1)*x3 
-
-  # Get the partial derivative of function with respect to variable x1 
-  partial_x1 =  f.partial('x1') # return a single real number
-  print("The derivative of f with respect to x1:",partial_x1)
-
-  # Get all the gradients of the function 
-  gradient =  f.gradient() # return a dictionary with key being variable name and value being the respective partial derivative
-  print("The gradients of f:",gradient)
-  f = x1 * 3
-  partial_x1 =  f.partial('x1') # return a single real number
-  print("The derivative of f with respect to x1:",partial_x1)
-
-  # Get all the gradients of the function 
-  gradient =  f.gradient()
-
-
+def createVariable(variable_name, value):
+    """Create a variable of type Dual with the given value and variable name
+    and the derivative of it being 1.
+    input:
+        -`variable_name`: string, the unique name for the variable
+        -`value`: float or int, the current value sotred in the variable
+    return :
+        - Dual: a Dual number that represents the created variable 
+        by only storing the information of the variable name with slope of 1
+        and value"""
+    if type(variable_name) != str:
+        raise TypeError('variable_name should be of type string')
+    if value is None:
+        raise ValueError("value should not be None")
+    if type(value) != int and type(value) != float:
+        raise TypeError("value should be in type float or int")
+    return Dual(value,{variable_name:1})
 
