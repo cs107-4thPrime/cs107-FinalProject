@@ -5,43 +5,11 @@ from src.Dual_class import *
 from src.Derivatives import *
 
 class TestFunctions:
-  def test_naturallog(self):
-    x1 = Dual(2,{'x1':1}) 
-    x2 = Dual(4,{'x2':1})
 
-    f = ln(x1)
-    assert f.value == math.log(2)
-    assert f.ders['x1'] == 1/2
 
-    f2 = ln(x2)
-    assert f2.value == math.log(4)
-    assert f2.ders['x2'] == 1/4
-  
-  def test_baselog(self):
-    x1 = Dual(2,{'x1':1}) 
-    x2 = Dual(4,{'x2':1})
+# Trig functions tests 
 
-    f = log(x1,3)
-    assert f.value == math.log(2,3)
-    assert f.ders['x1'] == 1/(2*math.log(3))
-
-    f2 = log(x2,10)
-    assert f2.value == math.log(4,10)
-    assert f2.ders['x2'] == 1/(4*math.log(10))
-
-  def test_exp(self):
-    x1 = Dual(-3,{'x1':1}) 
-    x2 = Dual(4,{'x2':1})
-
-    f = exp(x1)
-    assert f.value == math.exp(-3)
-    assert f.ders['x1'] == math.exp(-3)
-
-    f2 = exp(x2)
-    assert f2.value == math.exp(4)
-    assert f2.ders['x2'] == math.exp(4)
-
-  def test_sin(self):
+ def test_sin(self):
     x1 = Dual(-3,{'x1':1}) 
     x2 = Dual(0,{'x2':1})
     x3 = Dual(10,{'x3':1})
@@ -86,8 +54,9 @@ class TestFunctions:
     assert f3.value == math.tan(1)
     assert f3.ders['x2'] == (1/math.cos(1))**2 
 
+# Inverse trig functions tests 
 
-  def test_asin(self):
+def test_asin(self):
     
     x1 = Dual(math.pi/4,{'x1':1}) 
 
@@ -111,12 +80,36 @@ class TestFunctions:
     assert f.value == math.atan(math.pi/3)
     assert f.ders['x1'] == 1/(((math.pi/3)**2) + 1)
 
+# Exponential functions tests
+
+def test_exp(self):
+
+    x1 = Dual(-3,{'x1':1}) 
+    x2 = Dual(4,{'x2':1})
+
+    f = exp(x1)
+    assert f.value == math.exp(-3)
+    assert f.ders['x1'] == math.exp(-3)
+
+    f2 = exp(x2)
+    assert f2.value == math.exp(4)
+    assert f2.ders['x2'] == math.exp(4)
+
+def test_power(self):
+
+    x1 = Dual(4,{'x1':1}) 
+
+    f = power(2,4)
+    assert f.value == math.power(2,4)
+    assert f.ders['x1'] == math.log(2) * math.power(2,4)
+
+Hyperbolic function tests 
+
   def test_sinh(self):
 
     x1 = Dual(1, {'x1':1})
 
     f = sinh(x1)
-
     assert round(f.value,5) == round(math.sinh(1),5)
     assert round(f.ders['x1'],5) == round(math.cosh(1),5)
 
@@ -125,7 +118,6 @@ class TestFunctions:
     x1 = Dual(1, {'x1':1})
 
     f = cosh(x1)
-
     assert round(f.value,5) == round(math.cosh(1),5)
     assert round(f.ders['x1'],5) == round(math.sinh(1),5)
 
@@ -134,9 +126,47 @@ class TestFunctions:
     x1 = Dual(2, {'x1':1})
 
     f = tanh(x1)
-
     assert round(f.value,5) == round(math.tanh(2),5)
     assert round(f.ders['x1'],5) == round((1/math.cosh(2))**2,5)
+
+# Logistic function test
+
+  def test_logistic(self):
+
+    x1 = Dual(11, {'x1':1})
+
+    f = logistic(x1)
+    assert round(f.value,5) == round(1/(1+math.exp(-11)))
+    assert round(f.ders['x1'],5) == round((math.exp(-11))/(1+math.exp(-11))**2)
+
+
+# Logarithms tests 
+
+  def test_naturallog(self):
+    x1 = Dual(2,{'x1':1}) 
+    x2 = Dual(4,{'x2':1})
+
+    f = ln(x1)
+    assert f.value == math.log(2)
+    assert f.ders['x1'] == 1/2
+
+    f2 = ln(x2)
+    assert f2.value == math.log(4)
+    assert f2.ders['x2'] == 1/4
+  
+  def test_baselog(self):
+    x1 = Dual(2,{'x1':1}) 
+    x2 = Dual(4,{'x2':1})
+
+    f = log(x1,3)
+    assert f.value == math.log(2,3)
+    assert f.ders['x1'] == 1/(2*math.log(3))
+
+    f2 = log(x2,10)
+    assert f2.value == math.log(4,10)
+    assert f2.ders['x2'] == 1/(4*math.log(10))
+
+# Square root test
 
   def test_sqrt(self):
 
