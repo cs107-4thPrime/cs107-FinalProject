@@ -105,15 +105,6 @@ def sinh(a: Dual) -> Dual:
     ders[k] = math.cosh(a.value)*v
   return Dual(value, ders)
 
-def sinh(a: Dual) -> Dual:
-  """sinh of the dual number a, using math.sinh(x) and math.cosh(x)"""
-  """test for the sinh(a: Dual) function is not yet implemented in test_derivatives.py"""
-  value = math.sinh(a.value)
-  ders = dict()
-  for k,v in a.ders.items():
-    ders[k] = math.cosh(a.value)*v
-  return Dual(value, ders)
-
 def cosh(a: Dual) -> Dual:
   """cosh of the dual number a, using math.cosh(x)"""
   """test for the cosh(a: Dual) function is not yet implemented in test_derivatives.py"""
