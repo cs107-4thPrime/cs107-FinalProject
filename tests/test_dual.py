@@ -113,7 +113,7 @@ class TestFunctions:
     assert testsub.value==1
     assert testsub.ders=={'x1':1}
 
-  def test_div():
+  def test_div(self):
     a = Dual(2, {'x1':1})
     b = Dual(3, {'x1':3})
     test_div=a/b
@@ -137,7 +137,7 @@ class TestFunctions:
     assert test_div.value==2/3
     assert test_div.ders["x1"]==1
 
-  def test_rtruediv():
+  def test_rtruediv(self):
     a = Dual(2, {'x1':1})
     test_div=a/2
 
@@ -159,10 +159,10 @@ class TestFunctions:
     a = Dual(2, {'x1':3})
     tst=a*-1
     assert tst.value==-2
-    assert test.ders["x1"]==3
+    assert tst.ders["x1"]==-3
     
   def test_zeroPowerZero(self):
     a = Dual(0, {'x1':3})
-    tst=self.dual**0
+    tst=a**0
     assert tst.val==1
-    assert test.ders["x1"]==3
+    assert tst.ders["x1"]==1
