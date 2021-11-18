@@ -1,4 +1,2 @@
-Python==3.10.0
 numpy==1.21.4
-math==3.10.0
 pytest==6.0
