@@ -95,7 +95,7 @@ class TestFunctions:
 
   def test_rmul(self):
     a = Dual(2, {'x1':1})
-    testmul=2*b
+    testmul=2*a
     
     assert testmul.value==4
     assert testmul.ders["x1"]==2
@@ -119,7 +119,7 @@ class TestFunctions:
     test_div=a/b
 
     assert test_div.value==2/3
-    assert test_div.ders["x1"]==1
+    assert test_div.ders["x1"]==-1/3
 
 
   def test_rdiv(self):
@@ -135,7 +135,7 @@ class TestFunctions:
     test_div=a/b
 
     assert test_div.value==2/3
-    assert test_div.ders["x1"]==1
+    assert test_div.ders["x1"]==-1/3
 
   def test_rtruediv(self):
     a = Dual(2, {'x1':1})
@@ -164,5 +164,5 @@ class TestFunctions:
   def test_zeroPowerZero(self):
     a = Dual(0, {'x1':3})
     tst=a**0
-    assert tst.val==1
+    assert tst.value==1
     assert tst.ders["x1"]==1
