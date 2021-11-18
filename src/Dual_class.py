@@ -94,7 +94,7 @@ class Dual(object):
 
   def __rsub__(self,other):
     """Difference rule"""
-    return self.__sub__(other)
+    return self.__neg__()+other
 
   def __div__(self,other):
     """Quotient Rule & Reciprocal Rule: python 2"""
@@ -102,7 +102,7 @@ class Dual(object):
 
   def __rdiv__(self,other):
     """Quotient Rule & Reciprocal Rule: python 2"""
-    return self.__div__(other)
+    return self.__pow__(-1)*other
 
 
   def __truediv__(self,other):
@@ -111,7 +111,7 @@ class Dual(object):
 
   def __rtruediv__(self,other):
     """Quotient Rule & Reciprocal Rule: python 3"""
-    return self.__truediv__(other)
+    return self.__pow__(-1)*other
 
   def __pow__(self,other):
     """Power rule"""
