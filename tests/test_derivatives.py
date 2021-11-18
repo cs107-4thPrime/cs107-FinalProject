@@ -9,7 +9,7 @@ class TestFunctions:
 
 # Trig functions tests 
 
- def test_sin(self):
+def test_sin(self):
     x1 = Dual(-3,{'x1':1}) 
     x2 = Dual(0,{'x2':1})
     x3 = Dual(10,{'x3':1})
@@ -24,7 +24,7 @@ class TestFunctions:
     assert f3.value == math.sin(10)
     assert f3.ders['x3'] == math.cos(10)
 
-  def test_cos(self):
+def test_cos(self):
     x1 = Dual(-3,{'x1':1}) 
     x2 = Dual(0,{'x2':1})
     x3 = Dual(1,{'x2':1})
@@ -39,7 +39,7 @@ class TestFunctions:
     assert f3.value == math.cos(1)
     assert f3.ders['x2'] == -math.sin(1)
 
-  def test_tan(self):
+def test_tan(self):
     x1 = Dual(-3,{'x1':1}) 
     x2 = Dual(0,{'x2':1})
     x3 = Dual(1,{'x2':1})
@@ -64,7 +64,7 @@ def test_asin(self):
     assert f.value == math.asin(math.pi/4)
     assert f.ders['x1'] == 1/math.sqrt(1-(math.pi/4)**2)
 
-  def test_acos(self):
+def test_acos(self):
 
     x1 = Dual(math.pi/6,{'x1':1}) 
 
@@ -72,7 +72,7 @@ def test_asin(self):
     assert f.value == math.acos(math.pi/6)
     assert f.ders['x1'] == -1/math.sqrt(1-(math.pi/6)**2)
 
-  def test_atan(self):
+def test_atan(self):
 
     x1 = Dual(math.pi/3,{'x1':1}) 
 
@@ -105,7 +105,7 @@ def test_power(self):
 
 Hyperbolic function tests 
 
-  def test_sinh(self):
+def test_sinh(self):
 
     x1 = Dual(1, {'x1':1})
 
@@ -113,7 +113,7 @@ Hyperbolic function tests
     assert round(f.value,5) == round(math.sinh(1),5)
     assert round(f.ders['x1'],5) == round(math.cosh(1),5)
 
-  def test_cosh(self):
+def test_cosh(self):
 
     x1 = Dual(1, {'x1':1})
 
@@ -121,7 +121,7 @@ Hyperbolic function tests
     assert round(f.value,5) == round(math.cosh(1),5)
     assert round(f.ders['x1'],5) == round(math.sinh(1),5)
 
-  def test_tanh(self):
+def test_tanh(self):
 
     x1 = Dual(2, {'x1':1})
 
@@ -131,7 +131,7 @@ Hyperbolic function tests
 
 # Logistic function test
 
-  def test_logistic(self):
+def test_logistic(self):
 
     x1 = Dual(11, {'x1':1})
 
@@ -142,7 +142,7 @@ Hyperbolic function tests
 
 # Logarithms tests 
 
-  def test_naturallog(self):
+def test_naturallog(self):
     x1 = Dual(2,{'x1':1}) 
     x2 = Dual(4,{'x2':1})
 
@@ -154,7 +154,7 @@ Hyperbolic function tests
     assert f2.value == math.log(4)
     assert f2.ders['x2'] == 1/4
   
-  def test_baselog(self):
+def test_baselog(self):
     x1 = Dual(2,{'x1':1}) 
     x2 = Dual(4,{'x2':1})
 
@@ -168,7 +168,7 @@ Hyperbolic function tests
 
 # Square root test
 
-  def test_sqrt(self):
+def test_sqrt(self):
 
     x1 = Dual(16,{'x1':1}) 
 
@@ -180,42 +180,42 @@ Hyperbolic function tests
 def example_log_domainValueError():
   """If you have code that raises exceptions, pythest can verity them. 
   Assert function is raising correct Error: https://docs.pytest.org/en/6.2.x/getting-started.html"""
-  x1 = Dual(-2,{'x1':1}) 
-  x3 = Dual(0,{'x3':1})
+    x1 = Dual(-2,{'x1':1}) 
+    x3 = Dual(0,{'x3':1})
   
-  with pytest.raises(ValueError):
-    f = ln(x1)
-  with pytest.raises(ValueError):
-    f = ln(x2)
-  with pytest.raises(ValueError):
-    f = log(x1,3)
-  with pytest.raises(ValueError):
-    f = log(x2,5)
+    with pytest.raises(ValueError):
+        f = ln(x1)
+    with pytest.raises(ValueError):
+        f = ln(x2)
+    with pytest.raises(ValueError):
+        f = log(x1,3)
+    with pytest.raises(ValueError):
+        f = log(x2,5)
 
 def example_tan_domainValueError():
 
-  x1 = Dual(math.pi/2,{'x1':1}) 
-  x2 = Dual(math.pi/2+math.pi,{'x2':1})
+    x1 = Dual(math.pi/2,{'x1':1}) 
+    x2 = Dual(math.pi/2+math.pi,{'x2':1})
   
-  with pytest.raises(ValueError):
-    f = tan(x1)
-  with pytest.raises(ValueError):
-    f = tan(x2)
+    with pytest.raises(ValueError):
+        f = tan(x1)
+    with pytest.raises(ValueError):
+        f = tan(x2)
   
 
 def example_asin_acos_domainValueError():
   
-  x1 = Dual(2,{'x1':1}) 
-  x2 = Dual(2,{'x2':1})
+    x1 = Dual(2,{'x1':1}) 
+    x2 = Dual(2,{'x2':1})
   
-  with pytest.raises(ValueError):
-    f = asin(x1)
-  with pytest.raises(ValueError):
-    f = acos(x2)
+    with pytest.raises(ValueError):
+        f = asin(x1)
+    with pytest.raises(ValueError):
+        f = acos(x2)
 
 def example_sqrt_domainValueError():
   
-  x1 = Dual(-1,{'x1':1}) 
+    x1 = Dual(-1,{'x1':1}) 
   
-  with pytest.raises(ValueError):
-    f = sqrt(x1)
+    with pytest.raises(ValueError):
+        f = sqrt(x1)
