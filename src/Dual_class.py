@@ -126,7 +126,7 @@ class Dual(object):
           new_ders[k] = 0
           
     else:
-      raise Exception('Exponent of a Dual class can not be another Dual class')
+      raise TypeError('Exponent of a Dual class can not be another Dual class')
     return Dual(value,new_ders)
 
 
