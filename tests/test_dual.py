@@ -28,7 +28,6 @@ class TestFunctions:
     assert d.partial("x1")==1
     assert d.partial("x2")==-1
     
-    
   
   def test_gradient(self):
     a = Dual(2, {'x1':1})
@@ -71,66 +70,98 @@ class TestFunctions:
     assert type(eval(a.__repr__())) == Dual
     assert isinstance(eval(a.__repr__()), Dual)
 
-#   def test_add(self): 
-#     testsum=self.dual+self.dual #to test, lets try adding dual to itself
-#     testders={} 
-#     for i in self.dual.ders:
-#       testders[i]=2*self.dual.ders[i]
-
-#     assert testsum==Dual(2*self.dual.val,testders)
-#     pass
-
-#   def test_radd(self):
-#     return test_add(self)
-
-#   def test_mul(self):
-#     testmul=self.dual*self.dual #to test, lets multiply it by itself
-#     assert testmul.val==self.dual.val**2
-#     assert testmul.ders["x1"]==2*self.dual.val*self.dual.ders["x1"]
-#     return test_mul
-
-#   def test_rmul(self):
-#     return test_mul(self)
-
-#   def test_sub(self):
-#     nullders={} #to test, lets subtract it from itself
+  def test_add(self): 
+    a = Dual(2, {'x1':1})
+    b = Dual(3, {'x1':1})
+    testsum=a+b
     
-#     for i in self.dual.ders:
-#       nullders[i]=0
+    assert testsum.value==5
+    assert testsum.ders=={'x1':2}
 
-#     assert self.dual-self.dual==Dual(0, nullders)
-
-#   def test_rsub(self):
-#     return test_sub(self)
-
-#   def test_div():
-# #     test_div=self.dual/self.dual
-
-# #     assert test_div.val==1
-# #     assert test_div.ders["x1"]==(self.dual.val*(1/self.dual.ders["x1"]+self.dual.ders["x1"]*(1/self.dual.val)))
-#     pass
-
-#   def test_rdiv(self):
-# #       return test_div(self)
-#     pass
-
-#   def test_truediv(self):
-# #     return test_div(self)
-
-#   def test_rtruediv():
-# #     return test_div(self)
-
-#   def test_pow(self):
-#     test_mul=self.test_mul(self)
-#     testpow=self.test_mul(self) *self.dual
-#     assert test_mul.val >=0
-#     assert testpow.val==self.dual.val**3
-#     assert testpow.ders["x1"]==self.dual.val*test_mul.ders["x1"] +self.dual.ders["x1"]*test_mul.val
-
-#   def test_neg(self):
-#     tst=self.dual*-1
-#     assert tst.val==-self.dual.val
+  def test_radd(self):
+    a = Dual(2, {'x1':1})
+    b = Dual(3, {'x1':1})
+    testsum=a+b
     
-#   def test_zeroPowerZero(self):
-#     tst=self.dual**0
-#     assert tst.val==1
+    assert testsum.value==5
+    assert testsum.ders=={'x1':2}
+
+  def test_mul(self):
+    a = Dual(2, {'x1':1})
+    b = Dual(3, {'x1':2})
+    testmul=a*b
+    
+    assert testmul.value==6
+    assert testmul.ders["x1"]==7
+
+  def test_rmul(self):
+    a = Dual(2, {'x1':1})
+    testmul=2*b
+    
+    assert testmul.value==4
+    assert testmul.ders["x1"]==1
+
+
+  def test_sub(self):
+    a = Dual(2, {'x1':1})
+
+    assert a-a==Dual(0, {"x1":0})
+
+  def test_rsub(self):
+    a = Dual(2, {'x1':1})
+
+    assert a-a==Dual(0, {"x1":0})
+
+  def test_div():
+    a = Dual(2, {'x1':1})
+    b = Dual(3, {'x1':3})
+    test_div=a/b
+
+    assert test_div.value==2/3
+    assert test_div.ders["x1"]==1
+
+
+  def test_rdiv(self):
+    a = Dual(2, {'x1':1})
+    test_div=a/2
+
+    assert test_div.value==1
+    assert test_div.ders=={"x1":1}
+
+  def test_truediv(self):
+    a = Dual(2, {'x1':1})
+    b = Dual(3, {'x1':3})
+    test_div=a/b
+
+    assert test_div.value==2/3
+    assert test_div.ders["x1"]==1
+
+  def test_rtruediv():
+    a = Dual(2, {'x1':1})
+    test_div=a/2
+
+    assert test_div.value==1
+    assert test_div.ders=={"x1":1}
+
+  def test_pow(self):
+    a = Dual(2, {'x1':3})
+    testexp=a*a
+    testcub=a*a*a
+    
+    assert testexp.value >=0
+    assert testexp.value ==4
+    assert testcub.value==8
+    assert testexp.ders["x1"]==12
+    assert testcub.ders["x1"]==36
+
+  def test_neg(self):
+    a = Dual(2, {'x1':3})
+    tst=a*-1
+    assert tst.value==-2
+    assert test.ders["x1"]==3
+    
+  def test_zeroPowerZero(self):
+    a = Dual(0, {'x1':3})
+    tst=self.dual**0
+    assert tst.val==1
+    assert test.ders["x1"]==3
