@@ -80,11 +80,10 @@ class TestFunctions:
 
   def test_radd(self):
     a = Dual(2, {'x1':1})
-    b = Dual(3, {'x1':1})
-    testsum=a+b
+    testsum=3+a
     
     assert testsum.value==5
-    assert testsum.ders=={'x1':2}
+    assert testsum.ders=={'x1':1}
 
   def test_mul(self):
     a = Dual(2, {'x1':1})
@@ -96,29 +95,31 @@ class TestFunctions:
 
   def test_rmul(self):
     a = Dual(2, {'x1':1})
-    testmul=2*b
+    testmul=2*a
     
     assert testmul.value==4
-    assert testmul.ders["x1"]==1
+    assert testmul.ders["x1"]==2
 
 
   def test_sub(self):
     a = Dual(2, {'x1':1})
-
-    assert a-a==Dual(0, {"x1":0})
+    testsub=a-a
+    assert testsub.value==0
+    assert testsub.ders=={"x1":0}
 
   def test_rsub(self):
     a = Dual(2, {'x1':1})
+    testsub=a-1
+    assert testsub.value==1
+    assert testsub.ders=={'x1':1}
 
-    assert a-a==Dual(0, {"x1":0})
-
-  def test_div():
+  def test_div(self):
     a = Dual(2, {'x1':1})
     b = Dual(3, {'x1':3})
     test_div=a/b
 
     assert test_div.value==2/3
-    assert test_div.ders["x1"]==1
+    assert test_div.ders["x1"]==-1/3
 
 
   def test_rdiv(self):
@@ -126,7 +127,7 @@ class TestFunctions:
     test_div=a/2
 
     assert test_div.value==1
-    assert test_div.ders=={"x1":1}
+    assert test_div.ders=={"x1":1/2}
 
   def test_truediv(self):
     a = Dual(2, {'x1':1})
@@ -134,14 +135,14 @@ class TestFunctions:
     test_div=a/b
 
     assert test_div.value==2/3
-    assert test_div.ders["x1"]==1
+    assert test_div.ders["x1"]==-1/3
 
-  def test_rtruediv():
+  def test_rtruediv(self):
     a = Dual(2, {'x1':1})
     test_div=a/2
 
     assert test_div.value==1
-    assert test_div.ders=={"x1":1}
+    assert test_div.ders=={"x1":1/2}
 
   def test_pow(self):
     a = Dual(2, {'x1':3})
@@ -158,10 +159,10 @@ class TestFunctions:
     a = Dual(2, {'x1':3})
     tst=a*-1
     assert tst.value==-2
-    assert test.ders["x1"]==3
+    assert tst.ders["x1"]==-3
     
   def test_zeroPowerZero(self):
     a = Dual(0, {'x1':3})
-    tst=self.dual**0
-    assert tst.val==1
-    assert test.ders["x1"]==3
+    tst=a**0
+    assert tst.value==1
+    assert tst.ders["x1"]==1
