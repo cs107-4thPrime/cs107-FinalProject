@@ -36,7 +36,7 @@ class Dual(object):
     return result
 
   def __repr__(self) -> str: 
-    """return the type which is class which can construc the Dual with eval()"""
+    """return the type which is class which can construct the Dual with eval()"""
     class_name = type(self).__name__
     return f"{class_name}({self.value},{self.ders})"
 
@@ -44,10 +44,10 @@ class Dual(object):
   def __add__(self, other): 
     """
     = self + other
-    Description: a Dual(self) plus a constant(other) 
+    Description: a Dual(self) plus other
     input: 
         - `self`: a dual class
-        - `other`: a constant , float or int
+        - `other`: another Dual or a constant, float or int
     result:
         - self with updated value and ders
     """
@@ -79,7 +79,7 @@ class Dual(object):
     Description: a Dual(self) times a constant or another Dual(other) 
     input: 
         - `self`: a dual class
-        - `other`: a constant , float or int
+        - `other`: another Dual or a constant , float or int
     result:
         - new Dual with updated value and ders
     """
@@ -120,7 +120,7 @@ class Dual(object):
     Description: a Dual(self) minus a constant or another Dual(other) 
     input: 
         - `self`: a dual class
-        - `other`: a constant , float or int
+        - `other`: another Dual or a constant , float or int
     result:
         - self with updated value and ders
     """
@@ -145,7 +145,7 @@ class Dual(object):
     Description: a Dual (self) divided by a constant or Dual (other) 
     input: 
         - `self`: a dual class
-        - `other`: a constant , float or int
+        - `other`: another Dual or a constant , float or int
     result:
         - a new Dual class
     """
