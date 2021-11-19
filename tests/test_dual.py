@@ -60,8 +60,8 @@ class TestFunctions:
   def test_str(self):
     a = Dual(2, {'x1':1})
     result = f'Current Value is : 2\n'
-    result += 'Partial Derivative with respect to each variable:'
-    result += f'variable (x1): 1'
+    result += 'Partial Derivative with respect to each variable:\n'
+    result += f'variable (x1): 1\n'
     assert a.__str__() == result
 
   def test_repr(self):

@@ -84,10 +84,10 @@ def exp(a: Dual) -> Dual:
 
 def power(a: Dual, p: int or float) -> Dual:
   """power (dual number) of base p (integer or float number), using math.power(x, y)"""
-  value = math.power(p, a)
+  value = math.pow(p, a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.power(p, a)*math.log(p)*v
+    ders[k] = math.pow(p, a.value)*math.log(p)*v
   return Dual(value, ders)
 
 
@@ -131,10 +131,10 @@ def tanh(a: Dual) -> Dual:
 
 def logistic(a: Dual) -> Dual:
   """logistic function of the dual number a, using math.exp(x)"""
-  value = 1/(1+math.exp(-a))
+  value = 1/(1+math.exp(-a.value))
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = (math.exp(a)/((1 + math.exp(a))**2))*v
+    ders[k] = (math.exp(a.value)/((1 + math.exp(a.value))**2))*v
   return Dual(value, ders)
   
 

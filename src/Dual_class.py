@@ -30,9 +30,9 @@ class Dual(object):
   def __str__(self) -> str: 
     """return a string that shows the current value, and gradient"""
     result = f'Current Value is : {self.value}\n'
-    result += 'Partial Derivative with respect to each variable:'
+    result += 'Partial Derivative with respect to each variable:\n'
     for k,v in self.ders.items():
-      result += f'variable ({k}): {v}'
+      result += f'variable ({k}): {v}\n'
     return result
 
   def __repr__(self) -> str: 
