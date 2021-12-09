@@ -33,13 +33,14 @@ def atan(node) -> Node:
 
 # Exponential functions
 
-def exp(node) -> Dual:
+def exp(node) -> Node:
     """Exponential of the dual number a, using math.exp(x)"""
     return Node(node, None, np.exp(node.value), 'exp' )
 
-def power(node, p: int or float) -> Node:
-    """power (dual number) of base p (integer or float number), using math.power(x, y)"""
-    return Node(node, p, p**(node.value), 'power' )
+def power(node, p) -> Node:
+    """power (dual number) of base p (Constant), using math.power(x, y)"""
+    print("power:",type(p))
+    return Node(node, p, p.value**(node.value), 'power' )
 
 
 # Hyperbolic functions
@@ -54,7 +55,7 @@ def cosh(node) -> Node:
 
 def tanh(node) -> Node:
     """tanh of the dual number a, using math.tanh(x)"""
-    return Node(node, None, np.tanh(node.value), 'tahn' )
+    return Node(node, None, np.tanh(node.value), 'tanh' )
 
 
 # Logistic functions
@@ -74,11 +75,11 @@ def log(node, base):
         raise Exception('base has to be a Constant with integer value')
     return Node(node, base, 
                 np.log(node.value) / np.log(base.value), 
-                'log'+str(base.value))
+                'log')
 
 # Square root
 
-def sqrt(node) -> Dual:
+def sqrt(node) -> Node:
     """square root of a dual number"""
     return Node(node, None, np.sqrt(node.value), 'sqrt' )
 

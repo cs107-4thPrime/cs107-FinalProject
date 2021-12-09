@@ -11,6 +11,7 @@ class TestFunctions:
         x1 = Dual(-3,{'x1':1}) 
         x2 = Dual(0,{'x2':1})
         x3 = Dual(10,{'x3':1})
+        x4 = Dual(math.pi/2,{'x4':1})
 
         f = sin(x1)
         assert f.value == math.sin(-3)
@@ -21,11 +22,17 @@ class TestFunctions:
         f3 = sin(x3)
         assert f3.value == math.sin(10)
         assert f3.ders['x3'] == math.cos(10)
+        f4 = sin(x4)
+        assert f4.value == math.sin(math.pi/2)
+        assert f4.ders['x4'] == math.cos(math.pi/2)
+        
+        
 
     def test_cos(self):
         x1 = Dual(-3,{'x1':1}) 
         x2 = Dual(0,{'x2':1})
         x3 = Dual(1,{'x2':1})
+        x4 = Dual(math.pi/2,{'x4':1})
 
         f = cos(x1)
         assert f.value == math.cos(-3)
@@ -36,6 +43,9 @@ class TestFunctions:
         f3 = cos(x3)
         assert f3.value == math.cos(1)
         assert f3.ders['x2'] == -math.sin(1)
+        f4 = cos(x4)
+        assert f4.value == math.cos(math.pi/2)
+        assert f4.ders['x4'] == -math.sin(math.pi/2)
 
     def test_tan(self):
         x1 = Dual(-3,{'x1':1}) 

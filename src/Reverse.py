@@ -6,16 +6,16 @@ MISSING_OP = 'Operator should not be None when child1 is Node'
 ROOT_C2_ERROR = "Should not initialize child2 on the root."    
 OPERATOR_TYPE_ERROR = "Operator type not supported"
 SINGLE_VAR_ERROR = "Operator type only operates on single variable (child 1)"
+
     
 class Node:
-    SINGLE_VAR = ['ln','sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'log', 'sinh', 'cosh', 'tanh', 'logistic', 'ln', 'sqrt'] 
+    SINGLE_VAR = ['ln','sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'sinh', 'cosh', 'tanh', 'logistic', 'ln', 'sqrt'] 
     MULTI_VAR = ['+', '-', '*', '/', '**', 'power', 'log'] 
     
     
     def __init__(self, child1, child2=None, value = None, operator = None):
         self.child1 = child1
-        if not self._isValid(child1):
-            print(type(child1))
+        if child1 is None or not self._isValid(child1) :
             raise Exception(INPUT_ERROR)
         self.isroot = operator is None
         self.operator = operator
@@ -23,12 +23,6 @@ class Node:
             raise Exception(MISSING_OP)
         if self.isroot and child2 is not None:
             raise Exception(ROOT_C2_ERROR)
-
-        # If the operator is in the SINGLE_VAR category: 
-        # check that the first child should not be None and the second child should be None 
-        if operator in SINGLE_VAR:
-            if self.child1 == None or self.child2 is not None:
-                raise Exception(SINGLE_VAR_ERROR)
             
          
         self.child2 = child2
@@ -36,9 +30,16 @@ class Node:
         if self.value is None:
             self.value = self.child1.value
 
-        self.variables = self._getvariable(child1)
-        self.variables = set.union(self.variables,
-                                   self._getvariable(child2))
+        self.variables = child1._getvariable()
+        if child2 is not None:
+            self.variables = set.union(self.variables,
+                                   child2._getvariable())
+        
+        # If the operator is in the SINGLE_VAR category: 
+        # check that the first child should not be None and the second child should be None 
+        if operator in self.SINGLE_VAR:
+            if self.child1 == None or self.child2 is not None:
+                raise Exception(SINGLE_VAR_ERROR)
         
     def getvalue(self) -> float: 
         """return the current value"""
@@ -47,25 +48,13 @@ class Node:
     def _isValid(self,c):
         return type(c) in [Variable, Constant, Node]
     
-    
-    def _isElemFunc(self, operator):
-        ''' return True if the operator only involves a single variable'''
-        # TODO , NEED TO TAKE INTO ACCOUNT THE LOG BASE
-        return operator in SINGLE_VAR
 
-    def _getvariable(self,var):
-        if var is Node:
-            variables = var.variables
-        elif var is Variable or var is Constant:
-            variables = {var}
-        else:
-            variables = set()
-        return variables
+    def _getvariable(self):
+        return self.variables
+
     
     def _str(self, i):
         dash = ' '*i+"-"
-        if self.isroot:
-            return f'{dash} {self.child1.name}={self.child1.value}\n'
         
         result = f'{dash} {self.operator}\n'
         result += self.child1._str(i+1)
@@ -81,20 +70,14 @@ class Node:
     def __repr__(self) -> str: 
         """return string which can be used to reconstruct """
         class_name = type(self).__name__
-        return f'''{class_name}({self.child1}, {self.child2},
-    {self.value}, {self.operator})'''
+        return f'''{class_name}({self.child1.__repr__()}, {self.child2.__repr__()}, {self.value}, "{self.operator}")'''
     
     def __add__(self, other):
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
         return Node(self, other, self.value+other.value, "+")
-    
-    def __radd__(self, other):
-        if not self._isValid(other):
-            raise Exception(INPUT_ERROR)
-            
-        return Node(other, self, self.value+other.value, "+")
+
     
     def __mul__(self, other):
         print(self.value)
@@ -102,24 +85,14 @@ class Node:
             raise Exception(INPUT_ERROR)
             
         return Node(self, other, self.value*other.value, "*")
-    
-    def __rmul__(self, other):
-        if not self._isValid(other):
-            raise Exception(INPUT_ERROR)
-            
-        return Node(other, self, self.value*other.value, "*")
+
     
     def __truediv__(self,other):
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
         return Node(self, other, self.value/other.value, "/")
-    
-    def __rtruediv__(self,other):
-        if not self._isValid(other):
-            raise Exception(INPUT_ERROR)
-            
-        return Node(other, self, self.value/other.value, "/")
+
     
     def __neg__(self):
         return Node(self, None, -self.value, "-")
@@ -128,11 +101,6 @@ class Node:
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
         return Node(self,other, self.value-other.value,'-')
-    
-    def __rsub__(self,other):
-        if not self._isValid(other):
-            raise Exception(INPUT_ERROR)
-        return Node(self,other, other.value-self.value,'-')
     
     def __pow__(self,other):
         if not type(other) == Constant:
@@ -149,8 +117,6 @@ class Node:
         return self.reverse(var)
         
     def reverse(self, var):
-        if var is Constant:
-            raise Exception(VAR_TYPE_ERROR)
             
         v1 = self.child1.value
         d1 = self._reverse(var, self.child1)
@@ -202,7 +168,7 @@ class Node:
         elif self.operator == 'exp':
             return np.exp(v1)*d1
         elif self.operator == 'power':
-            return np.power(child2, v1)*np.log(child2)*d1
+            return math.pow(v2,v1)*math.log(v2)*d1
 
         # Hyperbolic functions
         elif self.operator == 'sinh':
@@ -220,7 +186,7 @@ class Node:
         elif self.operator == 'ln':
             return 1/(v1) * d1
         elif self.operator == 'log':
-            return 1/(v1 * np.log(child2))*d1
+            return 1/(v1 * np.log(v2))*d1
 
         # Square root
         elif self.operator == 'sqrt':
@@ -235,6 +201,9 @@ class Variable(Node):
     def __init__(self, name, value):
         self.name =name
         self.value = value
+        
+    def _getvariable(self):
+        return {self}
         
     def partial(self,var):
         if var is self:
@@ -261,6 +230,8 @@ class Constant(Node):
     def __init__(self, value):
         self.value = value
         self.name = 'Constant'
+    def _getvariable(self):
+        return {self}
         
     def partial(self,var):
         return 0
