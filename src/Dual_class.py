@@ -1,5 +1,7 @@
 import math
 from collections import defaultdict
+import numpy as np
+
 class Dual(object):
   def __init__(self,value, ders):
     """
@@ -221,3 +223,19 @@ def createVariable(variable_name, value):
         raise TypeError("value should be in type float or int")
     return Dual(value,{variable_name:1})
 
+def vectorize_ders(fs):
+    variable_set = set()
+    for i in range(fs.shape[0]):
+        for k in fs[i].ders.keys():
+            variable_set.add(k)
+    output = []
+    for i in range(fs.shape[0]):
+        temp = []
+        for v in sorted(variable_set):
+            
+            if v in fs[i].ders.keys():
+                temp.append(fs[i].ders[v])
+            else:
+                temp.append(0)
+        output.append(temp)
+    return sorted(variable_set),np.array(output)
