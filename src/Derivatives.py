@@ -15,26 +15,26 @@ from src.Dual_class import Dual
 
 def sin(a: Dual) -> Dual:
   """sine of the dual number a, using math.sin(x) and math.cos(x)"""
-  value = math.sin(a.value)
+  value = np.sin(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.cos(a.value)*v
+    ders[k] = np.cos(a.value)*v
   return Dual(value, ders)
 
 def cos(a: Dual) -> Dual:
   """cosine of the dual number a, using math.sin(x) and math.cos(x)"""
-  value = math.cos(a.value)
+  value = np.cos(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = (-1)*math.sin(a.value)*v
+    ders[k] = (-1)*np.sin(a.value)*v
   return Dual(value, ders)
 
 def tan(a: Dual) -> Dual:
   """tangent of the dual number a, using math.tan(x) and math.cos(x)"""
-  value = math.tan(a.value)
+  value = np.tan(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = 1/((math.cos(a.value))**2)*v
+    ders[k] = 1/((np.cos(a.value))**2)*v
   return Dual(value, ders)
 
 
@@ -44,10 +44,10 @@ def asin(a: Dual) -> Dual:
   """inverse of sine or arcsine of the dual number a, using math.asin(x)"""
   if abs(a.value) >= 1:
     raise ValueError('Arcsin cannot be evaluated at {}.'.format(a.value))
-  value = math.asin(a.value)
+  value = np.arcsin(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = 1/(math.sqrt(1-a.value**2))*v
+    ders[k] = 1/(np.sqrt(1-a.value**2))*v
   return Dual(value, ders)
 
 def acos(a: Dual) -> Dual:
@@ -56,16 +56,16 @@ def acos(a: Dual) -> Dual:
     raise ValueError('Arccos cannot be evaluated at {}.'.format(a.value))
   value = a.value
   print(value)
-  value = math.acos(a.value)
+  value = np.arccos(a.value)
   print(value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = (-1)/(math.sqrt(1-(a.value)**2))*v
+    ders[k] = (-1)/(np.sqrt(1-(a.value)**2))*v
   return Dual(value, ders)
 
 def atan(a: Dual) -> Dual:
   """inverse of tangent of the dual number a, using math.atan(x)"""
-  value = math.atan(a.value)
+  value = np.arctan(a.value)
   ders = dict()
   for k,v in a.ders.items():
     ders[k] = 1/(1+(a.value)**2)*v
@@ -76,18 +76,18 @@ def atan(a: Dual) -> Dual:
 
 def exp(a: Dual) -> Dual:
   """Exponential of the dual number a, using math.exp(x)"""
-  value = math.exp(a.value)
+  value = np.exp(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.exp(a.value)*v
+    ders[k] = np.exp(a.value)*v
   return Dual(value, ders)  
 
 def power(a: Dual, p: int or float) -> Dual:
   """power (dual number) of base p (integer or float number), using math.power(x, y)"""
-  value = math.pow(p, a.value)
+  value = np.power(p, a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.pow(p, a.value)*math.log(p)*v
+    ders[k] = np.power(p, a.value)*np.log(p)*v
   return Dual(value, ders)
 
 
@@ -96,34 +96,34 @@ def power(a: Dual, p: int or float) -> Dual:
 def sinh(a: Dual) -> Dual:
   """sinh of the dual number a, using math.sinh(x) and math.cosh(x)"""
   """test for the sinh(a: Dual) function is not yet implemented in test_derivatives.py"""
-  value = math.sinh(a.value)
+  value = np.sinh(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.cosh(a.value)*v
+    ders[k] = np.cosh(a.value)*v
   return Dual(value, ders)
 
 def sinh(a: Dual) -> Dual:
   """sinh of the dual number a, using math.sinh(x) and math.cosh(x)"""
-  value = math.sinh(a.value)
+  value = np.sinh(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.cosh(a.value)*v
+    ders[k] = np.cosh(a.value)*v
   return Dual(value, ders)
 
 def cosh(a: Dual) -> Dual:
   """cosh of the dual number a, using math.cosh(x)"""
-  value = math.cosh(a.value)
+  value = np.cosh(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = math.sinh(a.value)*v
+    ders[k] = np.sinh(a.value)*v
   return Dual(value, ders)
 
 def tanh(a: Dual) -> Dual:
   """tanh of the dual number a, using math.tanh(x)"""
-  value = math.tanh(a.value)
+  value = np.tanh(a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = 1/(math.cosh(a.value)**2)*v
+    ders[k] = 1/(np.cosh(a.value)**2)*v
   return Dual(value, ders)
 
 
@@ -131,10 +131,10 @@ def tanh(a: Dual) -> Dual:
 
 def logistic(a: Dual) -> Dual:
   """logistic function of the dual number a, using math.exp(x)"""
-  value = 1/(1+math.exp(-a.value))
+  value = 1/(1+np.exp(-a.value))
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = (math.exp(a.value)/((1 + math.exp(a.value))**2))*v
+    ders[k] = (np.exp(a.value)/((1 + np.exp(a.value))**2))*v
   return Dual(value, ders)
   
 
@@ -142,18 +142,18 @@ def logistic(a: Dual) -> Dual:
 
 def ln(a: Dual) -> Dual:
   """Natural log of Dual number a, using math.log(x)"""
-  value = math.log(a.value)
+  value = np.log(a.value)
   ders = dict()
-  for k,v in a.ders.items():
+  for k,v in a.ders.items(): 
     ders[k] = 1/(a.value) * v
   return Dual(value, ders)
 
 def log(a: Dual, base: int) -> Dual:
   """Log of Dual number a with base n, using math.log(x, base)"""
-  value = math.log(a.value, base)
+  value = np.log(a.value) / np.log(base)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = 1/(a.value * math.log(base))*v
+    ders[k] = 1/(a.value * np.log(base))*v
   return Dual(value, ders)
 
 
@@ -161,7 +161,7 @@ def log(a: Dual, base: int) -> Dual:
 
 def sqrt(a: Dual) -> Dual:
   """square root of a dual number"""
-  value = math.sqrt(a.value)
+  value = np.sqrt(a.value)
   ders = dict()
   for k,v in a.ders.items():
     ders[k] = (1/2)*(a.value**(-1/2))*v
