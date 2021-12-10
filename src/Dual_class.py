@@ -219,8 +219,8 @@ def createVariable(variable_name, value):
         raise TypeError('variable_name should be of type string')
     if value is None:
         raise ValueError("value should not be None")
-    if type(value) != int and type(value) != float:
-        raise TypeError("value should be in type float or int")
+#     if type(value) != int and type(value) != float:
+#         raise TypeError("value should be in type float or int")
     return Dual(value,{variable_name:1})
 
 def vectorize_ders(fs):
