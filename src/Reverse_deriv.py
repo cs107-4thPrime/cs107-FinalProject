@@ -39,7 +39,6 @@ def exp(node) -> Node:
 
 def power(node, p) -> Node:
     """power (dual number) of base p (Constant), using math.power(x, y)"""
-    print("power:",type(p))
     return Node(node, p, p.value**(node.value), 'power' )
 
 

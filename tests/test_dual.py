@@ -273,3 +273,16 @@ class TestFunctions:
     a = createVariable('x1',10)
     assert a.value == 10
     assert a.partial('x1') == 1
+    
+  def test_vectorize(self):
+    a = createVariable('x1',10)
+    b = createVariable('x2',10)
+    f1 = a+b
+    f2 = a+b
+    variables,ders = vectorize_ders(np.array([f1,f2]))
+    assert variables == ['x1','x2']
+    assert ders[0][0] == 1
+    assert ders[0][1] == 1
+    assert ders[1][0] == 1
+    assert ders[1][1] == 1
+                         
