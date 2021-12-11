@@ -1,5 +1,5 @@
 import numpy as np
-import math
+
 INPUT_ERROR = "Input should be one of Variable, Constant, or Node"
 VAR_TYPE_ERROR = "Invalid input type: var should be a Variable"
 MISSING_OP = 'Operator should not be None when child1 is Node'
@@ -80,7 +80,6 @@ class Node:
 
     
     def __mul__(self, other):
-        print(self.value)
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
@@ -168,7 +167,7 @@ class Node:
         elif self.operator == 'exp':
             return np.exp(v1)*d1
         elif self.operator == 'power':
-            return math.pow(v2,v1)*math.log(v2)*d1
+            return np.power(v2,v1)*np.log(v2)*d1
 
         # Hyperbolic functions
         elif self.operator == 'sinh':
@@ -212,6 +211,8 @@ class Variable(Node):
     
     def reverse(self,var):
         if var is self:
+            if type(self.value) == np.ndarray:
+                return np.full(self.value.shape,1)
             return 1
         return 0
         

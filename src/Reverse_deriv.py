@@ -1,4 +1,3 @@
-import math
 import numpy as np
 
 from src.Reverse import Variable, Constant, Node
