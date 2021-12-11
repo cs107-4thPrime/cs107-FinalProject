@@ -14,6 +14,9 @@ class Node:
     
     
     def __init__(self, child1, child2=None, value = None, operator = None):
+        """initialize the Node with child1 and child2, current value and the operator that links the two childs and return the current node.
+        This checks the input type to make sure child1 and child2 are Node, Variable or Constant. 
+        If the operator is considered to only take one input, then child2 has to be None"""
         self.child1 = child1
         if child1 is None or not self._isValid(child1) :
             raise Exception(INPUT_ERROR)
@@ -46,14 +49,17 @@ class Node:
         return self.value
     
     def _isValid(self,c):
+        """Check if input value is of type Node, Variable, or Constant"""
         return type(c) in [Variable, Constant, Node]
     
 
     def _getvariable(self):
+        """return a set of Variable and Constant that serve as the leaf nodes of this current Node Tree"""
         return self.variables
 
     
     def _str(self, i):
+        """helper function for the preorder traversal string function"""
         dash = ' '*i+"-"
         
         result = f'{dash} {self.operator}\n'
@@ -63,12 +69,13 @@ class Node:
         return result
             
     def __str__(self) :
+        """preorder traversal string presentation of the tree"""
         i = 1
         result = self._str(i)
         return result
     
     def __repr__(self) -> str: 
-        """return string which can be used to reconstruct """
+        """return string which can be used to reconstruct Node"""
         class_name = type(self).__name__
         return f'''{class_name}({self.child1.__repr__()}, {self.child2.__repr__()}, {self.value}, "{self.operator}")'''
     
@@ -201,18 +208,20 @@ class Node:
         
 class Variable(Node):
     def __init__(self, name, value):
+        """Take a string as variable name and a number (int, float, or numpy array of number) as the value of the variable"""
         self.name =name
         self.value = value
         
     def _getvariable(self):
+        """return a set that only contains itself"""
         return {self}
         
     def partial(self,var):
-        if var is self:
-            return 1
-        return 0
+        """return the derivative wrt to the given var (Node, Variable, or Constant). Same as reverse function"""
+        return self.reverse(var)
     
     def reverse(self,var):
+        """return 1 or an array of 1 if var is itself else 0. """
         if var is self:
             if type(self.value) == np.ndarray:
                 return np.full(self.value.shape,1)
@@ -220,13 +229,16 @@ class Variable(Node):
         return 0
         
     def _str(self, i):
+        """helper function for string"""
         dash = ' '*i+"-"
         return f'{dash} {self.name}={self.value}\n'
     
     def __str__(self):
+        """return a string format of Variable class: variable_name=value"""
         return f'{self.name}={self.value}'
     
     def __repr__(self):
+        """return string which can be used to reconstruct Node"""
         class_name = type(self).__name__
         return f'''{class_name}("{self.name}", {self.value})'''
     
