@@ -87,7 +87,10 @@ def power(a: Dual, p: int or float) -> Dual:
   value = np.power(p, a.value)
   ders = dict()
   for k,v in a.ders.items():
-    ders[k] = np.power(p, a.value)*np.log(p)*v
+    if a.value < 0:
+        ders[k] = 1/np.power(p, abs(a.value))*np.log(p)*v
+    else:
+        ders[k] = np.power(p, a.value)*np.log(p)*v
   return Dual(value, ders)
 
 

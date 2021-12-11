@@ -9,7 +9,7 @@ SINGLE_VAR_ERROR = "Operator type only operates on single variable (child 1)"
 
     
 class Node:
-    SINGLE_VAR = ['ln','sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'sinh', 'cosh', 'tanh', 'logistic', 'ln', 'sqrt'] 
+    SINGLE_VAR = ['ln','sqrt', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'exp', 'sinh', 'cosh', 'tanh', 'logistic', 'sqrt'] 
     MULTI_VAR = ['+', '-', '*', '/', '**', 'power', 'log'] 
     
     
@@ -167,7 +167,10 @@ class Node:
         elif self.operator == 'exp':
             return np.exp(v1)*d1
         elif self.operator == 'power':
-            return np.power(v2,v1)*np.log(v2)*d1
+            if v1 < 0:
+                return 1/np.power(v2,abs(v1))*np.log(v2)*d1
+            else:
+                return np.power(v2,v1)*np.log(v2)*d1
 
         # Hyperbolic functions
         elif self.operator == 'sinh':
@@ -212,6 +215,7 @@ class Variable(Node):
     def reverse(self,var):
         if var is self:
             if type(self.value) == np.ndarray:
+                print("np ndarray")
                 return np.full(self.value.shape,1)
             return 1
         return 0
