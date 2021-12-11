@@ -118,7 +118,7 @@ class Dual(object):
 
   def __sub__(self,other) :
     """
-    = self - sub
+    = self - other
     Description: a Dual(self) minus a constant or another Dual(other) 
     input: 
         - `self`: a dual class

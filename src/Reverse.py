@@ -80,6 +80,16 @@ class Node:
         return f'''{class_name}({self.child1.__repr__()}, {self.child2.__repr__()}, {self.value}, "{self.operator}")'''
     
     def __add__(self, other):
+        """
+        = self + other
+        Description: self plus other
+        input: 
+            - `self`
+            - `other`: another Node/Variable/Constant class
+        result:
+            - a new node as the parent of self and other
+        """
+
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
@@ -87,6 +97,15 @@ class Node:
 
     
     def __mul__(self, other):
+         """
+        = self * other
+        Description: self times other
+        input: 
+            - `self`
+            - `other`: another Node/Variable/Constant class
+        result:
+            -  a new node as the parent of self and other
+        """
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
@@ -94,6 +113,15 @@ class Node:
 
     
     def __truediv__(self,other):
+        """
+        = self/other
+        Description: self divided by other
+        input: 
+            - `self`
+            - `other`: another Node/Variable/Constant class
+        result:
+            - a new node as the parent of self and other
+        """
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
             
@@ -101,28 +129,57 @@ class Node:
 
     
     def __neg__(self):
+        """
+        = -self
+        Description: negation of self
+        input: 
+            - `self`
+        return:
+            - a new node as the parent of self
+        """
         return Node(self, None, -self.value, "-")
     
     def __sub__(self,other):
+        """
+        = self - other
+        Description: self minus other
+        input: 
+            - `self`
+            - `other`: another Node/Variable/Constant class
+        result:
+            -  a new node as the parent of self and other
+        """
         if not self._isValid(other):
             raise Exception(INPUT_ERROR)
         return Node(self,other, self.value-other.value,'-')
     
     def __pow__(self,other):
+        """
+        self**other
+        Description: raise self to to the power of a constant (other) 
+        input: 
+            - `self`
+            - `other`: Constant class
+        result:
+            - a new node as the parent of self and other
+        """
         if not type(other) == Constant:
             raise Exception('Exponent of a Node has to be a Constant.')
         return Node(self,other, self.value**other.value,'**')
     
     def _reverse(self, target_var, node):
+        '''Recursively run the reverse() function'''
         if node is None:
             return 0
         else:
             return node.reverse(target_var)
     
     def partial(self, var) :
+        '''Return the partial derivative with respect to the given variable '''
         return self.reverse(var)
         
     def reverse(self, var):
+        ''' Compute the partial derivative with respect to the given variable '''
             
         v1 = self.child1.value
         d1 = self._reverse(var, self.child1)
@@ -244,23 +301,32 @@ class Variable(Node):
     
 class Constant(Node):
     def __init__(self, value):
+        """take in vlaue and store it as the value of a constant"""
         self.value = value
         self.name = 'Constant'
+
     def _getvariable(self):
+        """return a set that only contains itself"""
         return {self}
         
     def partial(self,var):
+        """the derivative of a constant is 0. return 0""""
         return 0
+    
     def reverse(self,var):
+        """the partial derivative of a constant with respect to specified variable is 0. return 0""""
         return 0
     
     def _str(self, i):
+        """helper function for string"""
         dash = ' '*i+"-"
         return f'{dash} Constant={self.value}\n'
     
     def __str__(self):
+        """return a string format of Constant class: constant_name=value"""
         return f'Constant={self.value}'
     
     def __repr__(self):
+        """"return string which can be used to reconstruct Node""""
         class_name = type(self).__name__
         return f'''{class_name}({self.value})'''
