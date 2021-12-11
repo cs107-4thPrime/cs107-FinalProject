@@ -215,7 +215,6 @@ class Variable(Node):
     def reverse(self,var):
         if var is self:
             if type(self.value) == np.ndarray:
-                print("np ndarray")
                 return np.full(self.value.shape,1)
             return 1
         return 0

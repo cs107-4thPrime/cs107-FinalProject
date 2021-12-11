@@ -16,7 +16,6 @@ from src.Dual_class import Dual
 def sin(a: Dual) -> Dual:
   """sine of the dual number a, using math.sin(x) and math.cos(x)"""
   value = np.sin(a.value)
-  print("value:",value)
   ders = dict()
   for k,v in a.ders.items():
     ders[k] = np.cos(a.value)*v
@@ -56,9 +55,7 @@ def acos(a: Dual) -> Dual:
   if abs(a.value) >= 1:
     raise ValueError('Arccos cannot be evaluated at {}.'.format(a.value))
   value = a.value
-  print(value)
   value = np.arccos(a.value)
-  print(value)
   ders = dict()
   for k,v in a.ders.items():
     ders[k] = (-1)/(np.sqrt(1-(a.value)**2))*v
