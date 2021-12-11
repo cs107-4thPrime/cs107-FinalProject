@@ -26,11 +26,11 @@ class TestFunctions:
     d = createVariable('x4',-2.5)
     f1 = sin(a) * cos(b) + tan(c*d)
     
-    assert f1.value == math.sin(1) * math.cos(10) + math.tan((-1)*(-2.5))
-    assert f1.partial("x1") == math.cos(10) * math.cos(1)
-    assert f1.partial("x2") == -math.sin(10) * math.sin(1)
-    assert f1.partial("x3") == 1/math.cos((-1)*(-2.5))**2 * (-2.5)
-    assert f1.partial("x4") == 1/math.cos((-1)*(-2.5))**2 * (-1)
+    assert round(f1.value,14) == round(math.sin(1) * math.cos(10) + math.tan((-1)*(-2.5)),14)
+    assert round(f1.partial("x1"),15) == round( math.cos(10) * math.cos(1),15)
+    assert round(f1.partial("x2"),15) == round(-math.sin(10) * math.sin(1),15)
+    assert round(f1.partial("x3"),14) == round(1/math.cos((-1)*(-2.5))**2 * (-2.5),14)
+    assert round(f1.partial("x4"),14) == round(1/math.cos((-1)*(-2.5))**2 * (-1),14)
     
     
   def test_exp1(self):
