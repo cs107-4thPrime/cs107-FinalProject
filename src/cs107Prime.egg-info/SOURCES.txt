@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.cfg
+src/cs107Prime.egg-info/PKG-INFO
+src/cs107Prime.egg-info/SOURCES.txt
+src/cs107Prime.egg-info/dependency_links.txt
+src/cs107Prime.egg-info/top_level.txt
+src/cs107_4thprime/Dual_class.py
+src/cs107_4thprime/Reverse.py
+src/cs107_4thprime/__init__.py
