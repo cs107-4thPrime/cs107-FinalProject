@@ -19,6 +19,8 @@ jobs:
         pip install numpy
         pip install pytest
         pip install pytest-cov
-        pytest --cov=src/cs107_4thprime tests/. --cov-report=xml
+        pip install -i https://test.pypi.org/simple/ cs107Prime==0.0.2
+        python -m pytest --cov=src/cs107_4thprime tests/. --cov-report=xml
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2

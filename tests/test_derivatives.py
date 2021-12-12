@@ -1,8 +1,8 @@
 import pytest
 import math
 
-from src.Dual_class import *
-from src.Derivatives import *
+from src.cs107_4thprime.Dual_class import *
+
 
 class TestFunctions:
     # Trig functions tests 
@@ -11,31 +11,41 @@ class TestFunctions:
         x1 = Dual(-3,{'x1':1}) 
         x2 = Dual(0,{'x2':1})
         x3 = Dual(10,{'x3':1})
+        x4 = Dual(math.pi/2,{'x4':1})
 
         f = sin(x1)
-        assert f.value == math.sin(-3)
-        assert f.ders['x1'] == math.cos(-3)
+        assert round(f.value,15) == round(math.sin(-3),15)
+        assert round(f.ders['x1'],15) == round(math.cos(-3),15)
         f2 = sin(x2)
-        assert f2.value == math.sin(0)
-        assert f2.ders['x2'] == math.cos(0)
+        assert round(f2.value,15) == round(math.sin(0),15)
+        assert round(f2.ders['x2'],15) == round(math.cos(0),15)
         f3 = sin(x3)
-        assert f3.value == math.sin(10)
-        assert f3.ders['x3'] == math.cos(10)
+        assert round(f3.value,15) == round(math.sin(10),15)
+        assert round(f3.ders['x3'],15) == round(math.cos(10),15)
+        f4 = sin(x4)
+        assert round(f4.value,15) == round(math.sin(math.pi/2),15)
+        assert round(f4.ders['x4'],14) == round(math.cos(math.pi/2),14)
+        
+        
 
     def test_cos(self):
         x1 = Dual(-3,{'x1':1}) 
         x2 = Dual(0,{'x2':1})
         x3 = Dual(1,{'x2':1})
+        x4 = Dual(math.pi/2,{'x4':1})
 
         f = cos(x1)
-        assert f.value == math.cos(-3)
-        assert f.ders['x1'] == -math.sin(-3)
+        assert round(f.value,15) == round(math.cos(-3),15)
+        assert round(f.ders['x1'],15) == round(-math.sin(-3),15)
         f2 = cos(x2)
-        assert f2.value == math.cos(0)
-        assert f2.ders['x2'] == -math.sin(0)
+        assert round(f2.value,15) == round(math.cos(0),15)
+        assert round(f2.ders['x2'],15) == round(-math.sin(0),15)
         f3 = cos(x3)
-        assert f3.value == math.cos(1)
-        assert f3.ders['x2'] == -math.sin(1)
+        assert round(f3.value,15) == round(math.cos(1),15)
+        assert round(f3.ders['x2'] ,14)== round(-math.sin(1),14)
+        f4 = cos(x4)
+        assert round(f4.value,15) == round(math.cos(math.pi/2),15)
+        assert round(f4.ders['x4'],14) == round(-math.sin(math.pi/2),14)
 
     def test_tan(self):
         x1 = Dual(-3,{'x1':1}) 
