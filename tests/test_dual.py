@@ -1,6 +1,6 @@
 import pytest
 import math
-from src.Dual_class import *
+from src.cs107_4thprime.Dual_class import *
 
 class TestFunctions:
 

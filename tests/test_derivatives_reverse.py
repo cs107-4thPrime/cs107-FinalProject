@@ -1,8 +1,7 @@
 import pytest
 import math
 
-from src.Reverse import Variable, Constant, Node
-from src.Reverse_deriv import *
+from src.cs107_4thprime.Reverse import *
 
 class TestFunctions:
     ''' @Jason & @Robert: Please look at the natural log for reference. We have a different way to initialize Variable and Constant and to get the partial derivative.'''

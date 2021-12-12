@@ -1,8 +1,7 @@
 import pytest
 import math
 
-from src.Reverse import Variable, Constant, Node
-from src.Reverse_deriv import *
+from src.cs107_4thprime.Reverse import *
 
 
 class TestFunctions:

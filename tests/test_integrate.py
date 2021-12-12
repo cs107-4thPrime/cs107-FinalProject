@@ -2,8 +2,8 @@ import pytest
 import numpy as np
 import math
 
-from src.Dual_class import *
-from src.Derivatives import *
+from src.cs107_4thprime.Dual_class import *
+
 
 class TestFunctions:
   def test_sum1(self):
